@@ -480,6 +480,114 @@ function Portfolio() {
   );
 }
 
+// ─── FAQ ─────────────────────────────────────────────────────────────────────
+const faqs = [
+  {
+    q: "Сколько стоят ваши услуги?",
+    a: "Стоимость зависит от задачи. Лендинг — от 25 000 ₽, интернет-магазин — от 80 000 ₽, мобильное приложение — от 150 000 ₽. На бесплатном аудите называем точную цену под ваш проект — без скрытых платежей.",
+  },
+  {
+    q: "Как долго делается сайт?",
+    a: "Лендинг — 7–14 дней, корпоративный сайт — 3–4 недели, интернет-магазин — 4–6 недель. Сроки фиксируются в договоре. Не успели — компенсируем.",
+  },
+  {
+    q: "Вы работаете с небольшим бизнесом?",
+    a: "Да, это наша основная аудитория. Мы понимаем, что каждый рубль на счету, поэтому предлагаем решения под бюджет и поэтапную оплату. Минимальный проект — от 15 000 ₽.",
+  },
+  {
+    q: "Что если результат мне не понравится?",
+    a: "До сдачи каждого этапа — до 3 итераций правок бесплатно. Работаем до вашего «да». Если после старта что-то пойдёт не так — гарантийная поддержка 3 месяца включена в каждый проект.",
+  },
+  {
+    q: "Нужно ли мне разбираться в технологиях?",
+    a: "Совсем нет. Вы ставите задачу бизнес-языком — мы переводим в техническое решение. После сдачи обучаем управлять сайтом самостоятельно и оставляем видео-инструкции.",
+  },
+  {
+    q: "Вы занимаетесь продвижением после запуска?",
+    a: "Да. SEO, контекстная реклама, соцсети, Авито — всё это наши услуги. Многие клиенты начинают с сайта, а потом подключают продвижение. Можем работать в связке.",
+  },
+  {
+    q: "Можно ли доработать уже существующий сайт?",
+    a: "Конечно. Доработки, редизайн, ускорение, интеграции — берёмся за любые задачи с существующими проектами. Сначала делаем аудит и называем стоимость.",
+  },
+  {
+    q: "Как проходит общение в процессе работы?",
+    a: "У вас будет личный менеджер, чат в мессенджере и доступ к онлайн-доске с задачами. Регулярные созвоны по статусу — по желанию. Никаких «мы вам перезвоним».",
+  },
+];
+
+function FaqList() {
+  const [open, setOpen] = useState<number | null>(null);
+
+  return (
+    <div className="reveal flex flex-col gap-3 max-w-4xl">
+      {faqs.map((f, i) => {
+        const isOpen = open === i;
+        return (
+          <div
+            key={i}
+            className="dark-card cursor-pointer transition-all duration-300"
+            style={{ borderColor: isOpen ? "rgba(201, 168, 76, 0.3)" : undefined }}
+            onClick={() => setOpen(isOpen ? null : i)}
+          >
+            <div className="flex items-start justify-between gap-6 px-8 py-6">
+              <span
+                className="font-display text-xl font-light leading-snug"
+                style={{ color: isOpen ? "#e8e0d0" : "rgba(232, 224, 208, 0.75)" }}
+              >
+                {f.q}
+              </span>
+              <div
+                className="flex-shrink-0 w-7 h-7 flex items-center justify-center transition-all duration-300 mt-0.5"
+                style={{
+                  border: "1px solid rgba(201, 168, 76, 0.25)",
+                  transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
+                  background: isOpen ? "rgba(201, 168, 76, 0.1)" : "transparent",
+                }}
+              >
+                <Icon name="Plus" size={13} style={{ color: "var(--gold)" }} />
+              </div>
+            </div>
+
+            {isOpen && (
+              <div
+                className="px-8 pb-6"
+                style={{ borderTop: "1px solid rgba(201, 168, 76, 0.08)" }}
+              >
+                <p
+                  className="font-sans text-sm leading-relaxed pt-5"
+                  style={{ color: "rgba(232, 224, 208, 0.6)" }}
+                >
+                  {f.a}
+                </p>
+              </div>
+            )}
+          </div>
+        );
+      })}
+
+      <div
+        className="mt-6 p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+        style={{ background: "rgba(201, 168, 76, 0.05)", border: "1px solid rgba(201, 168, 76, 0.15)" }}
+      >
+        <div>
+          <p className="font-display text-2xl font-light mb-1" style={{ color: "#e8e0d0" }}>Не нашли ответ?</p>
+          <p className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.5)" }}>Напишите нам — ответим в течение 30 минут</p>
+        </div>
+        <a
+          href="#contacts"
+          className="flex-shrink-0 px-7 py-3 font-sans text-sm tracking-widest uppercase font-medium transition-all duration-300"
+          style={{ background: "var(--gold)", color: "var(--dark-bg)" }}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)"; }}
+          onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold)"; }}
+        >
+          Написать
+        </a>
+      </div>
+    </div>
+  );
+}
+
 // ─── About ───────────────────────────────────────────────────────────────────
 function About() {
   const [activeStep, setActiveStep] = useState(0);
@@ -498,16 +606,6 @@ function About() {
     { icon: "TrendingUp", title: "Платите за результат", desc: "Оплата поэтапная. Принимаете работу — переходите к следующему этапу." },
     { icon: "Users", title: "Команда под ваш проект", desc: "Не фрилансер-одиночка, а команда: разработчик, дизайнер, маркетолог и менеджер." },
     { icon: "RefreshCw", title: "Правки включены", desc: "До 3 итераций правок на каждом этапе — без доплат. Работаем до вашего «да»." },
-  ];
-
-  const whyWe = [
-    { label: "Сроки зафиксированы в договоре", us: true, them: false },
-    { label: "Прозрачная отчётность и личный кабинет", us: true, them: false },
-    { label: "Полный цикл: от идеи до рекламы", us: true, them: false },
-    { label: "Поддержка после сдачи проекта", us: true, them: false },
-    { label: "Поэтапная оплата", us: true, them: false },
-    { label: "Выделенный менеджер проекта", us: true, them: false },
-    { label: "Опыт в 10+ отраслях", us: true, them: false },
   ];
 
   const deliverables = [
@@ -623,53 +721,18 @@ function About() {
           </div>
         </div>
 
-        {/* Мы vs Конкуренты */}
+        {/* FAQ */}
         <div>
           <div className="reveal mb-16">
-            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Сравнение</p>
+            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Частые вопросы</p>
             <h2 className="font-display text-5xl md:text-6xl font-light" style={{ color: "#e8e0d0" }}>
-              Мы vs{" "}
-              <em className="italic" style={{ color: "var(--gold)" }}>конкуренты</em>
+              Отвечаем{" "}
+              <em className="italic" style={{ color: "var(--gold)" }}>честно</em>
             </h2>
             <div className="mt-5 gold-line" />
           </div>
 
-          <div className="reveal dark-card overflow-hidden">
-            {/* Header */}
-            <div
-              className="grid grid-cols-3 px-8 py-4"
-              style={{ background: "rgba(201, 168, 76, 0.06)", borderBottom: "1px solid rgba(201, 168, 76, 0.12)" }}
-            >
-              <div className="font-sans text-xs tracking-widest uppercase" style={{ color: "rgba(232, 224, 208, 0.4)" }}>Критерий</div>
-              <div className="text-center font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>БизнесВверх</div>
-              <div className="text-center font-sans text-xs tracking-widest uppercase" style={{ color: "rgba(232, 224, 208, 0.4)" }}>Другие агентства</div>
-            </div>
-            {whyWe.map((row, i) => (
-              <div
-                key={row.label}
-                className="grid grid-cols-3 px-8 py-5 items-center"
-                style={{ borderBottom: i < whyWe.length - 1 ? "1px solid rgba(201, 168, 76, 0.07)" : "none" }}
-              >
-                <div className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.65)" }}>{row.label}</div>
-                <div className="flex justify-center">
-                  <div
-                    className="w-7 h-7 flex items-center justify-center"
-                    style={{ background: "rgba(201, 168, 76, 0.12)", border: "1px solid rgba(201, 168, 76, 0.3)" }}
-                  >
-                    <Icon name="Check" size={14} style={{ color: "var(--gold)" }} />
-                  </div>
-                </div>
-                <div className="flex justify-center">
-                  <div
-                    className="w-7 h-7 flex items-center justify-center"
-                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
-                  >
-                    <Icon name="X" size={14} style={{ color: "rgba(232, 224, 208, 0.2)" }} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <FaqList />
         </div>
 
       </div>
