@@ -213,15 +213,88 @@ function Hero() {
 
 // ─── Services ────────────────────────────────────────────────────────────────
 const services = [
-  { icon: "TrendingUp", title: "Стратегия роста", desc: "Разрабатываем дорожную карту развития бизнеса с чёткими KPI и временными горизонтами на 1–3 года.", tags: ["Рыночный анализ", "Позиционирование", "Roadmap"] },
-  { icon: "Settings2", title: "Оптимизация процессов", desc: "Выявляем узкие места, устраняем потери и выстраиваем эффективные операционные процессы.", tags: ["Lean", "Автоматизация", "Регламенты"] },
-  { icon: "Users", title: "Развитие команды", desc: "Формируем сильные команды: подбор, адаптация, система мотивации и оценки результатов.", tags: ["HR-стратегия", "Обучение", "KPI"] },
-  { icon: "BarChart3", title: "Финансовое моделирование", desc: "Строим финансовые модели, анализируем unit-экономику и находим точки максимальной прибыльности.", tags: ["P&L", "Unit-экономика", "Инвестиции"] },
-  { icon: "Globe", title: "Выход на новые рынки", desc: "Готовим выход на новые регионы и рынки: от исследования до первых продаж и масштабирования.", tags: ["GTM стратегия", "Партнёрства", "Локализация"] },
-  { icon: "Shield", title: "Управление рисками", desc: "Идентифицируем, оцениваем и разрабатываем планы митигации ключевых бизнес-рисков.", tags: ["Risk Matrix", "Сценарии", "Планы Б"] },
+  {
+    icon: "Globe",
+    title: "Создание и продвижение сайтов",
+    badge: "Web",
+    desc: "Разрабатываем современные сайты и интернет-магазины, продвигаем их в поисковых системах и обеспечиваем стабильный поток клиентов.",
+    tags: ["SEO", "Контекстная реклама", "Лендинги", "Интернет-магазины"],
+  },
+  {
+    icon: "ShoppingBag",
+    title: "Ведение Авито",
+    badge: "Avito",
+    desc: "Профессиональное ведение аккаунта на Авито: оформление, публикация объявлений, продвижение и аналитика продаж.",
+    tags: ["Объявления", "Продвижение", "Аналитика", "Автозагрузка"],
+  },
+  {
+    icon: "Smartphone",
+    title: "Мобильное приложение",
+    badge: "iOS & Android",
+    desc: "Разрабатываем мобильные приложения для бизнеса с нуля — индивидуальный дизайн, синхронизация с магазином и мощный маркетинг.",
+    tags: ["Синхронизация с магазином", "Публикация в сторах", "Push Marketing", "Аналитика", "iOS & Android"],
+  },
+  {
+    icon: "Plug",
+    title: "Интеграция",
+    badge: "Настроить",
+    desc: "Автоматизация онлайн-торговли: заказы в CRM, синхронизация каталога, контроль сотрудников и обмен данными с маркетплейсами.",
+    tags: ["CRM", "1С / учёт", "Яндекс / Google", "Маркетплейсы", "B2B порталы", "Готовые решения"],
+  },
+  {
+    icon: "Zap",
+    title: "Оптимизация",
+    badge: "Быстро",
+    desc: "Делаем продукты, которые работают быстро: ускорение сайта, оптимизация медиа, Google PageSpeed и разбор программного кода.",
+    tags: ["PageSpeed", "Медиа-контент", "Код", "Загрузка страниц"],
+  },
+  {
+    icon: "Bot",
+    title: "Цифровые помощники",
+    badge: "Боты",
+    desc: "Вспомогательные программные боты любой сложности: чат-боты, боты для рассылок, Telegram, VK и WhatsApp боты.",
+    tags: ["Telegram Bot", "VK Bot", "WhatsApp Bot", "Чат-консультант", "Рассылки"],
+  },
+  {
+    icon: "Code2",
+    title: "Индивидуальная разработка",
+    badge: "Зачем?",
+    desc: "Воплотите свою идею в жизнь: интерактивные помощники, нейронные сети, умный маркетинг, калькуляторы и административные панели.",
+    tags: ["Нейронные сети", "Калькуляторы", "Аналитика", "Умный маркетинг", "CMS"],
+  },
+  {
+    icon: "Glasses",
+    title: "Дополненная реальность",
+    badge: "Например",
+    desc: "Проекты, которые выходят за рамки дисплея: AR-квесты, виртуальные исследования, интерактивные помощники и разработка под ключ.",
+    tags: ["AR квесты", "Виртуальный тур", "Кастомизация", "Под ключ"],
+  },
+  {
+    icon: "Users",
+    title: "Социальные сети",
+    badge: "#like",
+    desc: "Создайте вокруг бизнеса социальное сообщество: продвижение групп, оформление, рассылки, реклама ВКонтакте и создание магазина.",
+    tags: ["ВКонтакте", "Telegram", "Реклама", "Кросспостинг", "Магазин"],
+  },
+  {
+    icon: "MousePointerClick",
+    title: "Запуск рекламы",
+    badge: "Click",
+    desc: "Контекстная и таргетированная реклама, рассылки в мессенджерах, email-маркетинг, воронки продаж и аналитика роста.",
+    tags: ["Google / Яндекс", "VK Реклама", "Email", "Воронки", "Аналитика"],
+  },
+  {
+    icon: "PenLine",
+    title: "Копирайтинг",
+    badge: "Text",
+    desc: "Оригинальный контент — важная составляющая сайта: уникальные статьи, продающие тексты, описания товаров, 100% уникальность.",
+    tags: ["Статьи", "Продающие тексты", "Описания товаров", "Рерайт"],
+  },
 ];
 
 function Services() {
+  const [expanded, setExpanded] = useState<number | null>(null);
+
   return (
     <section id="services" className="py-32" style={{ background: "var(--dark-surface)" }}>
       <div className="max-w-7xl mx-auto px-6">
@@ -231,34 +304,65 @@ function Services() {
           <div className="mt-5 gold-line" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s, i) => (
-            <div
-              key={s.title}
-              className="reveal card-hover p-8 dark-card"
-              style={{ transitionDelay: `${i * 0.08}s` }}
-            >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((s, i) => {
+            const isOpen = expanded === i;
+            return (
               <div
-                className="w-12 h-12 flex items-center justify-center mb-6"
-                style={{ border: "1px solid rgba(201, 168, 76, 0.2)" }}
+                key={s.title}
+                className="reveal dark-card cursor-pointer"
+                style={{ transitionDelay: `${i * 0.05}s`, border: isOpen ? "1px solid rgba(201, 168, 76, 0.35)" : undefined }}
+                onClick={() => setExpanded(isOpen ? null : i)}
               >
-                <Icon name={s.icon} size={20} style={{ color: "var(--gold)" }} />
+                <div className="p-7">
+                  <div className="flex items-start justify-between gap-3 mb-4">
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="w-11 h-11 flex-shrink-0 flex items-center justify-center"
+                        style={{ border: "1px solid rgba(201, 168, 76, 0.2)", background: isOpen ? "rgba(201, 168, 76, 0.08)" : "transparent" }}
+                      >
+                        <Icon name={s.icon} size={18} style={{ color: "var(--gold)" }} />
+                      </div>
+                      <div>
+                        <div
+                          className="font-sans text-xs tracking-widest uppercase mb-1"
+                          style={{ color: "rgba(201, 168, 76, 0.5)" }}
+                        >
+                          {s.badge}
+                        </div>
+                        <h3 className="font-display text-xl font-light leading-tight" style={{ color: "#e8e0d0" }}>{s.title}</h3>
+                      </div>
+                    </div>
+                    <div
+                      className="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300"
+                      style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0deg)" }}
+                    >
+                      <Icon name="Plus" size={14} style={{ color: "var(--gold)" }} />
+                    </div>
+                  </div>
+
+                  {isOpen && (
+                    <div className="mt-4 pt-4" style={{ borderTop: "1px solid rgba(201, 168, 76, 0.1)" }}>
+                      <p className="font-sans text-sm leading-relaxed mb-5" style={{ color: "rgba(232, 224, 208, 0.6)" }}>
+                        {s.desc}
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {s.tags.map((t) => (
+                          <span
+                            key={t}
+                            className="font-sans text-xs px-2 py-1"
+                            style={{ border: "1px solid rgba(201, 168, 76, 0.18)", color: "rgba(201, 168, 76, 0.7)" }}
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-              <h3 className="font-display text-2xl font-light mb-3" style={{ color: "#e8e0d0" }}>{s.title}</h3>
-              <p className="font-sans text-sm leading-relaxed mb-6" style={{ color: "rgba(232, 224, 208, 0.55)" }}>{s.desc}</p>
-              <div className="flex flex-wrap gap-2">
-                {s.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="font-sans text-xs px-2 py-1"
-                    style={{ border: "1px solid rgba(201, 168, 76, 0.18)", color: "rgba(201, 168, 76, 0.7)" }}
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
