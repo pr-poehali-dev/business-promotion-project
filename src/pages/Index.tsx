@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Icon from "@/components/ui/icon";
 
 // ─── Reveal hook ─────────────────────────────────────────────────────────────
@@ -14,11 +14,88 @@ function useReveal() {
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.1 }
     );
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+}
+
+// ─── Custom Cursor ────────────────────────────────────────────────────────────
+function Cursor() {
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const pos = useRef({ x: 0, y: 0 });
+  const ring = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const onMove = (e: MouseEvent) => {
+      pos.current = { x: e.clientX, y: e.clientY };
+      if (dotRef.current) {
+        dotRef.current.style.left = e.clientX + "px";
+        dotRef.current.style.top = e.clientY + "px";
+      }
+    };
+    const onHover = (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      const hovering = t.closest("a,button,[data-hover]") !== null;
+      dotRef.current?.classList.toggle("hovering", hovering);
+      ringRef.current?.classList.toggle("hovering", hovering);
+    };
+    let raf: number;
+    const animate = () => {
+      ring.current.x += (pos.current.x - ring.current.x) * 0.12;
+      ring.current.y += (pos.current.y - ring.current.y) * 0.12;
+      if (ringRef.current) {
+        ringRef.current.style.left = ring.current.x + "px";
+        ringRef.current.style.top = ring.current.y + "px";
+      }
+      raf = requestAnimationFrame(animate);
+    };
+    animate();
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseover", onHover);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mouseover", onHover);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  return (
+    <>
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
+    </>
+  );
+}
+
+// ─── Marquee strip ────────────────────────────────────────────────────────────
+const marqueeItems = [
+  "Сайты под ключ", "Мобильные приложения", "SEO продвижение",
+  "Реклама Яндекс / Google", "Telegram боты", "Авито", "Автоматизация",
+  "Дизайн интерфейсов", "CRM интеграции", "Соцсети",
+];
+
+function Marquee() {
+  const items = [...marqueeItems, ...marqueeItems];
+  return (
+    <div
+      className="relative overflow-hidden py-5"
+      style={{ borderTop: "1px solid rgba(201,168,76,0.1)", borderBottom: "1px solid rgba(201,168,76,0.1)", background: "rgba(201,168,76,0.03)" }}
+    >
+      <div className="marquee-track">
+        {items.map((item, i) => (
+          <div key={i} className="flex items-center gap-8 pr-8 flex-shrink-0">
+            <span className="font-sans text-xs tracking-widest uppercase whitespace-nowrap" style={{ color: "rgba(201,168,76,0.55)" }}>
+              {item}
+            </span>
+            <span style={{ color: "rgba(201,168,76,0.25)", fontSize: "6px" }}>◆</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 // ─── Nav ──────────────────────────────────────────────────────────────────────
@@ -104,98 +181,185 @@ function Nav() {
 
 // ─── Hero ────────────────────────────────────────────────────────────────────
 function Hero() {
+  const [mousePos, setMousePos] = useState({ x: 0.5, y: 0.5 });
+
+  useEffect(() => {
+    const h = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX / window.innerWidth, y: e.clientY / window.innerHeight });
+    };
+    window.addEventListener("mousemove", h);
+    return () => window.removeEventListener("mousemove", h);
+  }, []);
+
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
       style={{ background: "var(--dark-bg)" }}
     >
-      <div className="absolute inset-0" style={{
-        backgroundImage: `
-          radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201, 168, 76, 0.07) 0%, transparent 70%),
-          linear-gradient(180deg, transparent 60%, rgba(14, 12, 9, 0.9) 100%)
-        `
-      }} />
+      {/* Animated mesh gradient background */}
+      <div
+        className="absolute inset-0 transition-all duration-700"
+        style={{
+          background: `
+            radial-gradient(ellipse 70% 50% at ${30 + mousePos.x * 40}% ${20 + mousePos.y * 30}%, rgba(201,168,76,0.09) 0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at ${70 - mousePos.x * 20}% ${70 - mousePos.y * 20}%, rgba(201,168,76,0.05) 0%, transparent 60%),
+            radial-gradient(ellipse 100% 60% at 50% 100%, rgba(14,12,9,1) 0%, transparent 70%)
+          `
+        }}
+      />
 
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-8 w-px h-32 opacity-20" style={{ background: "linear-gradient(180deg, transparent, var(--gold), transparent)" }} />
-        <div className="absolute top-1/3 right-8 w-px h-48 opacity-15" style={{ background: "linear-gradient(180deg, transparent, var(--gold), transparent)" }} />
-        <div className="absolute bottom-24 left-1/4 h-px w-24 opacity-20" style={{ background: "linear-gradient(90deg, transparent, var(--gold), transparent)" }} />
-        <div className="absolute top-20 right-1/3 h-px w-16 opacity-15" style={{ background: "linear-gradient(90deg, transparent, var(--gold), transparent)" }} />
+      {/* SVG animated background */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice">
+          {/* Animated grid lines */}
+          {[0,1,2,3,4].map(i => (
+            <line key={`v${i}`} x1={200 + i * 200} y1="0" x2={200 + i * 200} y2="800"
+              stroke="rgba(201,168,76,0.04)" strokeWidth="1" />
+          ))}
+          {[0,1,2,3].map(i => (
+            <line key={`h${i}`} x1="0" y1={150 + i * 170} x2="1200" y2={150 + i * 170}
+              stroke="rgba(201,168,76,0.04)" strokeWidth="1" />
+          ))}
+          {/* Large spinning circle */}
+          <circle cx="900" cy="200" r="280" fill="none" stroke="rgba(201,168,76,0.05)" strokeWidth="1"
+            style={{ transformOrigin: "900px 200px", animation: "spin-slow 30s linear infinite" }} />
+          <circle cx="900" cy="200" r="180" fill="none" stroke="rgba(201,168,76,0.04)" strokeWidth="1"
+            strokeDasharray="8 16"
+            style={{ transformOrigin: "900px 200px", animation: "spin-reverse 20s linear infinite" }} />
+          {/* Floating diamond */}
+          <polygon points="900,80 960,200 900,320 840,200"
+            fill="none" stroke="rgba(201,168,76,0.08)" strokeWidth="1"
+            style={{ transformOrigin: "900px 200px", animation: "spin-slow 25s linear infinite" }} />
+          {/* Left accent geometry */}
+          <circle cx="150" cy="500" r="120" fill="none" stroke="rgba(201,168,76,0.04)" strokeWidth="1"
+            strokeDasharray="4 12"
+            style={{ transformOrigin: "150px 500px", animation: "spin-reverse 18s linear infinite" }} />
+          {/* Diagonal accent line */}
+          <line x1="0" y1="750" x2="400" y2="350" stroke="rgba(201,168,76,0.06)" strokeWidth="1" />
+          <line x1="1200" y1="50" x2="800" y2="450" stroke="rgba(201,168,76,0.06)" strokeWidth="1" />
+        </svg>
+
+        {/* Floating orbs */}
+        <div className="absolute animate-float-slow animate-delay-0"
+          style={{ top: "15%", right: "12%", width: 280, height: 280,
+            background: "radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 70%)",
+            borderRadius: "50%" }} />
+        <div className="absolute animate-float animate-delay-1500"
+          style={{ bottom: "20%", left: "8%", width: 200, height: 200,
+            background: "radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 70%)",
+            borderRadius: "50%" }} />
+        <div className="absolute animate-float-slow animate-delay-3000"
+          style={{ top: "50%", left: "50%", width: 400, height: 400, marginLeft: -200, marginTop: -200,
+            background: "radial-gradient(circle, rgba(201,168,76,0.03) 0%, transparent 70%)",
+            borderRadius: "50%" }} />
       </div>
 
-      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-        <p
-          className="text-xs tracking-widest uppercase mb-8 animate-fade-in"
-          style={{ color: "var(--gold)", letterSpacing: "0.25em", animationFillMode: "both" }}
-        >
-          Digital-агентство
-        </p>
+      {/* Right-side decorative visual */}
+      <div className="absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none hidden lg:block" style={{ width: 360, marginRight: -40 }}>
+        <div className="relative w-full h-[360px]">
+          {/* Outer ring */}
+          <div className="absolute inset-0 rounded-full border animate-spin-slow"
+            style={{ borderColor: "rgba(201,168,76,0.1)", borderStyle: "dashed" }} />
+          {/* Middle ring */}
+          <div className="absolute inset-10 rounded-full border animate-spin-reverse"
+            style={{ borderColor: "rgba(201,168,76,0.12)" }} />
+          {/* Inner circle */}
+          <div className="absolute inset-20 rounded-full animate-pulse-gold"
+            style={{ background: "rgba(201,168,76,0.05)", border: "1px solid rgba(201,168,76,0.2)" }} />
+          {/* Center dot */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full animate-pulse-gold"
+            style={{ background: "var(--gold)" }} />
+          {/* Orbiting dots */}
+          {[0, 72, 144, 216, 288].map((deg, i) => (
+            <div key={deg} className="absolute top-1/2 left-1/2 w-2 h-2"
+              style={{
+                marginTop: -4, marginLeft: -4,
+                animation: `orbit ${10 + i}s linear infinite`,
+                animationDelay: `${-i * 2}s`,
+              }}>
+              <div className="w-2 h-2 rounded-full" style={{ background: i % 2 === 0 ? "var(--gold)" : "rgba(201,168,76,0.4)" }} />
+            </div>
+          ))}
+          {/* Floating cards */}
+          <div className="absolute glass-card px-4 py-3 animate-float"
+            style={{ top: "8%", left: "-10%", animationDelay: "0.5s", minWidth: 140 }}>
+            <div className="font-sans text-xs mb-1" style={{ color: "rgba(201,168,76,0.6)" }}>Новый проект</div>
+            <div className="font-display text-lg" style={{ color: "#e8e0d0" }}>StyleHub</div>
+            <div className="font-sans text-xs mt-1 flex items-center gap-1" style={{ color: "rgba(201,168,76,0.8)" }}>
+              <span>↑</span> +340% заказов
+            </div>
+          </div>
+          <div className="absolute glass-card px-4 py-3 animate-float-slow"
+            style={{ bottom: "12%", left: "-15%", animationDelay: "2s", minWidth: 130 }}>
+            <div className="font-sans text-xs mb-1" style={{ color: "rgba(201,168,76,0.6)" }}>Запущено</div>
+            <div className="font-sans text-sm" style={{ color: "#e8e0d0" }}>18 000 установок</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="relative z-10 max-w-5xl mx-auto px-6 text-center lg:text-left lg:max-w-3xl lg:mr-auto lg:ml-16 xl:ml-32">
+        <div className="flex items-center gap-3 justify-center lg:justify-start mb-8 animate-fade-in" style={{ animationFillMode: "both" }}>
+          <div className="w-8 h-px" style={{ background: "var(--gold)" }} />
+          <p className="text-xs tracking-widest uppercase font-sans" style={{ color: "var(--gold)", letterSpacing: "0.2em" }}>
+            Digital-агентство
+          </p>
+        </div>
 
         <h1
-          className="font-display text-6xl md:text-8xl lg:text-9xl font-light leading-none mb-8 animate-fade-in animate-delay-200"
-          style={{ color: "#e8e0d0", letterSpacing: "-0.01em", animationFillMode: "both" }}
+          className="font-display font-light leading-none mb-8 animate-fade-in animate-delay-200"
+          style={{ fontSize: "clamp(3.5rem, 8vw, 7rem)", color: "#e8e0d0", letterSpacing: "-0.02em", animationFillMode: "both" }}
         >
           Рост,{" "}
-          <em className="italic font-light" style={{ color: "var(--gold)" }}>который</em>
+          <em className="italic shimmer-text">который</em>
           <br />
           виден в цифрах
         </h1>
 
-        <div
-          className="mx-auto mb-10 animate-fade-in animate-delay-400"
-          style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, var(--gold), transparent)", animationFillMode: "both" }}
-        />
-
         <p
-          className="font-sans text-base md:text-lg font-light max-w-xl mx-auto mb-14 animate-fade-in animate-delay-500"
-          style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.8", animationFillMode: "both" }}
+          className="font-sans font-light max-w-lg mb-12 animate-fade-in animate-delay-400"
+          style={{ fontSize: "1.1rem", color: "rgba(232,224,208,0.58)", lineHeight: "1.85", animationFillMode: "both" }}
         >
           Создаём сайты, мобильные приложения и digital-инструменты,
           которые привлекают клиентов и автоматизируют ваш бизнес
         </p>
 
-        <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animate-delay-600" style={{ animationFillMode: "both" }}>
-          <a
-            href="#portfolio"
-            className="px-8 py-4 font-sans text-sm tracking-widest uppercase transition-all duration-300"
-            style={{ background: "var(--gold)", color: "var(--dark-bg)", fontWeight: 500 }}
-            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold-light)"; }}
-            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "var(--gold)"; }}
-          >
+        <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in animate-delay-500" style={{ animationFillMode: "both" }}>
+          <a href="#portfolio" className="btn-gold px-8 py-4 font-sans text-sm tracking-widest uppercase font-medium">
             Смотреть кейсы
           </a>
           <a
             href="#contacts"
-            className="px-8 py-4 font-sans text-sm tracking-widest uppercase transition-all duration-300"
-            style={{ border: "1px solid rgba(201, 168, 76, 0.4)", color: "rgba(232, 224, 208, 0.8)" }}
+            className="px-8 py-4 font-sans text-sm tracking-widest uppercase transition-all duration-300 group"
+            style={{ border: "1px solid rgba(201,168,76,0.35)", color: "rgba(232,224,208,0.75)" }}
             onMouseEnter={(e) => {
               (e.currentTarget as HTMLAnchorElement).style.borderColor = "var(--gold)";
               (e.currentTarget as HTMLAnchorElement).style.color = "var(--gold)";
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(201, 168, 76, 0.4)";
-              (e.currentTarget as HTMLAnchorElement).style.color = "rgba(232, 224, 208, 0.8)";
+              (e.currentTarget as HTMLAnchorElement).style.borderColor = "rgba(201,168,76,0.35)";
+              (e.currentTarget as HTMLAnchorElement).style.color = "rgba(232,224,208,0.75)";
             }}
           >
-            Бесплатная консультация
+            Бесплатный аудит
           </a>
         </div>
 
         <div
-          className="grid grid-cols-3 gap-8 max-w-2xl mx-auto mt-24 pt-12 animate-fade-in animate-delay-700"
-          style={{ borderTop: "1px solid rgba(201, 168, 76, 0.12)", animationFillMode: "both" }}
+          className="grid grid-cols-3 gap-8 max-w-md mt-20 pt-10 animate-fade-in animate-delay-700 mx-auto lg:mx-0"
+          style={{ borderTop: "1px solid rgba(201,168,76,0.1)", animationFillMode: "both" }}
         >
           {[
             { value: "7+", label: "лет на рынке" },
-            { value: "320+", label: "реализованных проектов" },
-            { value: "98%", label: "клиентов возвращаются" },
+            { value: "320+", label: "проектов" },
+            { value: "98%", label: "возвращаются" },
           ].map((s) => (
-            <div key={s.label} className="text-center">
-              <div className="font-display text-4xl md:text-5xl font-light mb-2" style={{ color: "var(--gold)" }}>
+            <div key={s.label}>
+              <div className="font-display text-3xl md:text-4xl font-light mb-1" style={{ color: "var(--gold)" }}>
                 {s.value}
               </div>
-              <div className="font-sans text-xs tracking-wider uppercase" style={{ color: "rgba(232, 224, 208, 0.45)" }}>
+              <div className="font-sans text-xs tracking-wider uppercase" style={{ color: "rgba(232,224,208,0.4)" }}>
                 {s.label}
               </div>
             </div>
@@ -203,9 +367,14 @@ function Hero() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40">
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        style={{ opacity: 0.45 }}>
+        <div className="w-px h-12 relative overflow-hidden" style={{ background: "rgba(201,168,76,0.2)" }}>
+          <div className="absolute top-0 left-0 w-full h-1/2 animate-float"
+            style={{ background: "linear-gradient(180deg, var(--gold), transparent)" }} />
+        </div>
         <span className="font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>Scroll</span>
-        <div className="w-px h-10" style={{ background: "linear-gradient(180deg, var(--gold), transparent)" }} />
       </div>
     </section>
   );
@@ -895,11 +1064,16 @@ export default function Index() {
 
   return (
     <div style={{ background: "var(--dark-bg)" }}>
+      <Cursor />
       <Nav />
       <Hero />
+      <Marquee />
       <Services />
+      <div className="section-divider" />
       <Portfolio />
+      <div className="section-divider" />
       <About />
+      <div className="section-divider" />
       <Contacts />
       <Footer />
     </div>
