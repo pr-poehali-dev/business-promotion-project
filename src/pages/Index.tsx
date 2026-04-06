@@ -481,85 +481,197 @@ function Portfolio() {
 }
 
 // ─── About ───────────────────────────────────────────────────────────────────
-const team = [
-  { name: "Алексей Громов", role: "Руководитель агентства", exp: "7 лет в digital. Запустил 150+ проектов от лендингов до высоконагруженных платформ." },
-  { name: "Мария Кузнецова", role: "Head of Design & Mobile", exp: "UX/UI эксперт. Разработала приложения с суммарной аудиторией 500 000+ пользователей." },
-  { name: "Сергей Павлов", role: "Директор по маркетингу", exp: "Специалист по performance-маркетингу. Управлял бюджетами свыше 50 млн ₽ в год." },
-];
-
 function About() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const steps = [
+    { num: "01", title: "Заявка", desc: "Оставляете заявку или звоните — отвечаем в течение 30 минут в рабочее время." },
+    { num: "02", title: "Бесплатный аудит", desc: "Анализируем ваш бизнес, сайт и конкурентов. Предлагаем решение под ваши задачи и бюджет." },
+    { num: "03", title: "Договор и старт", desc: "Согласовываем ТЗ, подписываем договор. Вы всегда знаете, что происходит — личный кабинет с прогрессом." },
+    { num: "04", title: "Запуск и рост", desc: "Сдаём проект в срок, обучаем команду, остаёмся на поддержке. Ваш бизнес растёт — мы рядом." },
+  ];
+
+  const advantages = [
+    { icon: "Clock", title: "Сроки — не пустое слово", desc: "Фиксируем дедлайны в договоре. Не сдали вовремя — компенсируем." },
+    { icon: "Eye", title: "Полная прозрачность", desc: "Личный кабинет с задачами, статусами и отчётами. Вы видите каждый этап работы." },
+    { icon: "Headphones", title: "Поддержка 7 дней в неделю", desc: "Выделенный менеджер, чат и телефон. Решаем вопросы, а не перекладываем ответственность." },
+    { icon: "TrendingUp", title: "Платите за результат", desc: "Оплата поэтапная. Принимаете работу — переходите к следующему этапу." },
+    { icon: "Users", title: "Команда под ваш проект", desc: "Не фрилансер-одиночка, а команда: разработчик, дизайнер, маркетолог и менеджер." },
+    { icon: "RefreshCw", title: "Правки включены", desc: "До 3 итераций правок на каждом этапе — без доплат. Работаем до вашего «да»." },
+  ];
+
+  const whyWe = [
+    { label: "Сроки зафиксированы в договоре", us: true, them: false },
+    { label: "Прозрачная отчётность и личный кабинет", us: true, them: false },
+    { label: "Полный цикл: от идеи до рекламы", us: true, them: false },
+    { label: "Поддержка после сдачи проекта", us: true, them: false },
+    { label: "Поэтапная оплата", us: true, them: false },
+    { label: "Выделенный менеджер проекта", us: true, them: false },
+    { label: "Опыт в 10+ отраслях", us: true, them: false },
+  ];
+
+  const deliverables = [
+    { icon: "Globe", text: "Готовый сайт или приложение под ключ" },
+    { icon: "BarChart2", text: "Настроенную аналитику и цели" },
+    { icon: "MousePointerClick", text: "Запущенную рекламу с первыми заявками" },
+    { icon: "FileText", text: "Инструкции и обучение команды" },
+    { icon: "ShieldCheck", text: "Гарантию и техническую поддержку" },
+    { icon: "TrendingUp", text: "Отчёт по результатам и план роста" },
+  ];
+
   return (
     <section id="about" className="py-32" style={{ background: "var(--dark-surface)" }}>
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid md:grid-cols-2 gap-20 items-start">
-          <div>
-            <div className="reveal">
-              <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>О нас</p>
-              <h2 className="font-display text-5xl md:text-6xl font-light mb-6" style={{ color: "#e8e0d0" }}>
-                Мы делаем{" "}
-                <em className="italic" style={{ color: "var(--gold)" }}>digital</em>,{" "}
-                который работает
-              </h2>
-              <div className="gold-line mb-8" />
-            </div>
-            <div className="reveal">
-              <p className="font-sans text-base leading-relaxed mb-6" style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.9" }}>
-                БизнесВверх — full-service digital-агентство. Разрабатываем сайты, мобильные
-                приложения, запускаем рекламу и автоматизируем бизнес-процессы. Работаем
-                с малым бизнесом, сетями и маркетплейсами.
-              </p>
-              <p className="font-sans text-base leading-relaxed" style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.9" }}>
-                Для нас важен результат, а не процесс. Каждый проект сопровождается
-                аналитикой, отчётностью и поддержкой после запуска — чтобы ваш бизнес
-                рос, а не просто «имел сайт».
-              </p>
-            </div>
-            <div className="reveal mt-12 grid grid-cols-2 gap-4">
-              {[
-                { icon: "Target", text: "Результат, а не процесс" },
-                { icon: "BarChart2", text: "Аналитика и отчётность" },
-                { icon: "Handshake", text: "Поддержка после запуска" },
-                { icon: "Lightbulb", text: "Современные технологии" },
-              ].map((v) => (
-                <div
-                  key={v.text}
-                  className="flex items-start gap-3 p-4"
-                  style={{ border: "1px solid rgba(201, 168, 76, 0.1)" }}
-                >
-                  <Icon name={v.icon} size={16} style={{ color: "var(--gold)", marginTop: 2 }} />
-                  <span className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.65)" }}>{v.text}</span>
-                </div>
-              ))}
-            </div>
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-28">
+
+        {/* Как начать работу */}
+        <div>
+          <div className="reveal mb-16">
+            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Просто и понятно</p>
+            <h2 className="font-display text-5xl md:text-6xl font-light" style={{ color: "#e8e0d0" }}>
+              Как начать{" "}
+              <em className="italic" style={{ color: "var(--gold)" }}>работу</em>
+            </h2>
+            <div className="mt-5 gold-line" />
           </div>
 
-          <div className="flex flex-col gap-6">
-            <div className="reveal">
-              <p className="font-sans text-xs tracking-widest uppercase mb-8" style={{ color: "rgba(201, 168, 76, 0.6)" }}>Команда</p>
-            </div>
-            {team.map((member, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+            {steps.map((s, i) => (
               <div
-                key={member.name}
-                className="reveal card-hover p-7 dark-card"
-                style={{ transitionDelay: `${i * 0.1}s` }}
+                key={s.num}
+                className="reveal card-hover dark-card p-7 cursor-pointer"
+                style={{
+                  transitionDelay: `${i * 0.08}s`,
+                  borderColor: activeStep === i ? "rgba(201, 168, 76, 0.4)" : undefined,
+                }}
+                onMouseEnter={() => setActiveStep(i)}
               >
-                <div className="flex items-start gap-5">
+                <div
+                  className="font-display text-5xl font-light mb-5 leading-none"
+                  style={{ color: "rgba(201, 168, 76, 0.2)" }}
+                >
+                  {s.num}
+                </div>
+                <div className="font-display text-2xl font-light mb-3" style={{ color: "#e8e0d0" }}>{s.title}</div>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(232, 224, 208, 0.55)" }}>{s.desc}</p>
+                <div
+                  className="mt-5 h-px transition-all duration-500"
+                  style={{ background: activeStep === i ? "var(--gold)" : "rgba(201, 168, 76, 0.15)", width: activeStep === i ? "100%" : "30%" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Что вы получите */}
+        <div>
+          <div className="reveal mb-16">
+            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Результат работы</p>
+            <h2 className="font-display text-5xl md:text-6xl font-light" style={{ color: "#e8e0d0" }}>
+              Что вы{" "}
+              <em className="italic" style={{ color: "var(--gold)" }}>получите</em>
+            </h2>
+            <div className="mt-5 gold-line" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {deliverables.map((d, i) => (
+              <div
+                key={d.text}
+                className="reveal flex items-start gap-5 p-6 dark-card card-hover"
+                style={{ transitionDelay: `${i * 0.07}s` }}
+              >
+                <div
+                  className="w-10 h-10 flex-shrink-0 flex items-center justify-center"
+                  style={{ background: "rgba(201, 168, 76, 0.08)", border: "1px solid rgba(201, 168, 76, 0.2)" }}
+                >
+                  <Icon name={d.icon} size={16} style={{ color: "var(--gold)" }} />
+                </div>
+                <span className="font-sans text-sm leading-relaxed pt-2" style={{ color: "rgba(232, 224, 208, 0.7)" }}>{d.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Преимущества */}
+        <div>
+          <div className="reveal mb-16">
+            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Наши принципы</p>
+            <h2 className="font-display text-5xl md:text-6xl font-light" style={{ color: "#e8e0d0" }}>
+              Почему выбирают{" "}
+              <em className="italic" style={{ color: "var(--gold)" }}>нас</em>
+            </h2>
+            <div className="mt-5 gold-line" />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {advantages.map((a, i) => (
+              <div
+                key={a.title}
+                className="reveal card-hover dark-card p-7"
+                style={{ transitionDelay: `${i * 0.07}s` }}
+              >
+                <div
+                  className="w-11 h-11 flex items-center justify-center mb-5"
+                  style={{ border: "1px solid rgba(201, 168, 76, 0.2)" }}
+                >
+                  <Icon name={a.icon} size={18} style={{ color: "var(--gold)" }} />
+                </div>
+                <div className="font-display text-xl font-light mb-2" style={{ color: "#e8e0d0" }}>{a.title}</div>
+                <p className="font-sans text-sm leading-relaxed" style={{ color: "rgba(232, 224, 208, 0.55)" }}>{a.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Мы vs Конкуренты */}
+        <div>
+          <div className="reveal mb-16">
+            <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>Сравнение</p>
+            <h2 className="font-display text-5xl md:text-6xl font-light" style={{ color: "#e8e0d0" }}>
+              Мы vs{" "}
+              <em className="italic" style={{ color: "var(--gold)" }}>конкуренты</em>
+            </h2>
+            <div className="mt-5 gold-line" />
+          </div>
+
+          <div className="reveal dark-card overflow-hidden">
+            {/* Header */}
+            <div
+              className="grid grid-cols-3 px-8 py-4"
+              style={{ background: "rgba(201, 168, 76, 0.06)", borderBottom: "1px solid rgba(201, 168, 76, 0.12)" }}
+            >
+              <div className="font-sans text-xs tracking-widest uppercase" style={{ color: "rgba(232, 224, 208, 0.4)" }}>Критерий</div>
+              <div className="text-center font-sans text-xs tracking-widest uppercase" style={{ color: "var(--gold)" }}>БизнесВверх</div>
+              <div className="text-center font-sans text-xs tracking-widest uppercase" style={{ color: "rgba(232, 224, 208, 0.4)" }}>Другие агентства</div>
+            </div>
+            {whyWe.map((row, i) => (
+              <div
+                key={row.label}
+                className="grid grid-cols-3 px-8 py-5 items-center"
+                style={{ borderBottom: i < whyWe.length - 1 ? "1px solid rgba(201, 168, 76, 0.07)" : "none" }}
+              >
+                <div className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.65)" }}>{row.label}</div>
+                <div className="flex justify-center">
                   <div
-                    className="w-12 h-12 flex-shrink-0 flex items-center justify-center font-display text-lg"
-                    style={{ background: "rgba(201, 168, 76, 0.1)", border: "1px solid rgba(201, 168, 76, 0.2)", color: "var(--gold)" }}
+                    className="w-7 h-7 flex items-center justify-center"
+                    style={{ background: "rgba(201, 168, 76, 0.12)", border: "1px solid rgba(201, 168, 76, 0.3)" }}
                   >
-                    {member.name.split(" ").map((n) => n[0]).join("")}
+                    <Icon name="Check" size={14} style={{ color: "var(--gold)" }} />
                   </div>
-                  <div>
-                    <div className="font-display text-xl font-light mb-1" style={{ color: "#e8e0d0" }}>{member.name}</div>
-                    <div className="font-sans text-xs tracking-wide mb-3" style={{ color: "var(--gold)", opacity: 0.8 }}>{member.role}</div>
-                    <div className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.5)" }}>{member.exp}</div>
+                </div>
+                <div className="flex justify-center">
+                  <div
+                    className="w-7 h-7 flex items-center justify-center"
+                    style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+                  >
+                    <Icon name="X" size={14} style={{ color: "rgba(232, 224, 208, 0.2)" }} />
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
       </div>
     </section>
   );
