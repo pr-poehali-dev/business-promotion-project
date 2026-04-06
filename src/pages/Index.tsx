@@ -129,7 +129,7 @@ function Hero() {
           className="text-xs tracking-widest uppercase mb-8 animate-fade-in"
           style={{ color: "var(--gold)", letterSpacing: "0.25em", animationFillMode: "both" }}
         >
-          Стратегический консалтинг
+          Digital-агентство
         </p>
 
         <h1
