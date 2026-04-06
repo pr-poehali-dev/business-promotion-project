@@ -151,8 +151,8 @@ function Hero() {
           className="font-sans text-base md:text-lg font-light max-w-xl mx-auto mb-14 animate-fade-in animate-delay-500"
           style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.8", animationFillMode: "both" }}
         >
-          Помогаем компаниям выйти на новый уровень через стратегическое планирование,
-          оптимизацию процессов и развитие команд
+          Создаём сайты, мобильные приложения и digital-инструменты,
+          которые привлекают клиентов и автоматизируют ваш бизнес
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in animate-delay-600" style={{ animationFillMode: "both" }}>
@@ -187,9 +187,9 @@ function Hero() {
           style={{ borderTop: "1px solid rgba(201, 168, 76, 0.12)", animationFillMode: "both" }}
         >
           {[
-            { value: "12+", label: "лет опыта" },
-            { value: "140+", label: "успешных проектов" },
-            { value: "3.2×", label: "средний рост выручки" },
+            { value: "7+", label: "лет на рынке" },
+            { value: "320+", label: "реализованных проектов" },
+            { value: "98%", label: "клиентов возвращаются" },
           ].map((s) => (
             <div key={s.label} className="text-center">
               <div className="font-display text-4xl md:text-5xl font-light mb-2" style={{ color: "var(--gold)" }}>
@@ -372,25 +372,25 @@ function Services() {
 // ─── Portfolio ────────────────────────────────────────────────────────────────
 const cases = [
   {
-    industry: "Ритейл", company: "FashionGroup", tag: "Стратегия роста",
-    challenge: "Падение продаж на 23% на фоне роста онлайн-конкурентов",
-    solution: "Разработали омниканальную стратегию, запустили программу лояльности, провели ребрендинг ценностного предложения",
-    results: [{ metric: "+187%", label: "онлайн-продажи" }, { metric: "+34%", label: "средний чек" }, { metric: "×2.4", label: "LTV клиента" }],
-    duration: "8 месяцев",
+    industry: "Интернет-магазин", company: "StyleHub", tag: "Сайт + приложение",
+    challenge: "Устаревший сайт без мобильной версии, заказы принимались только по телефону",
+    solution: "Разработали современный интернет-магазин с интеграцией 1С, запустили мобильное приложение для iOS и Android с push-уведомлениями",
+    results: [{ metric: "+340%", label: "онлайн-заказов" }, { metric: "×2.8", label: "конверсия в покупку" }, { metric: "18 000", label: "установок приложения" }],
+    duration: "3 месяца",
   },
   {
-    industry: "Производство", company: "MetalTech", tag: "Оптимизация",
-    challenge: "Высокие операционные издержки, низкая рентабельность производства",
-    solution: "Картирование потоков создания ценности, внедрение lean-практик, автоматизация контроля качества",
-    results: [{ metric: "−31%", label: "операционные расходы" }, { metric: "+18%", label: "рентабельность" }, { metric: "×3", label: "скорость производства" }],
-    duration: "6 месяцев",
+    industry: "Авто-сервис", company: "AutoPro",  tag: "Реклама + SEO",
+    challenge: "Нулевой трафик из интернета, все клиенты только по сарафанному радио",
+    solution: "Запустили контекстную рекламу в Яндекс и Google, настроили SEO, создали и оформили группы ВКонтакте и Telegram-канал",
+    results: [{ metric: "+520%", label: "трафик на сайт" }, { metric: "−60%", label: "стоимость заявки" }, { metric: "×4.1", label: "рост обращений" }],
+    duration: "2 месяца",
   },
   {
-    industry: "IT-сервис", company: "CloudSoft", tag: "Рост выручки",
-    challenge: "Стагнация на 12 млн ₽/мес, отсутствие понятной стратегии роста",
-    solution: "Переход на product-led growth модель, редизайн ценообразования, выход на B2B сегмент",
-    results: [{ metric: "×3.2", label: "выручка за год" }, { metric: "−40%", label: "стоимость привлечения" }, { metric: "+210", label: "новых B2B-клиентов" }],
-    duration: "12 месяцев",
+    industry: "Доставка еды", company: "FoodRun", tag: "Чат-бот + автоматизация",
+    challenge: "Менеджеры тратили 6 часов в день на обработку заказов в мессенджерах вручную",
+    solution: "Разработали Telegram-бота с меню, приёмом заказов и оплатой, интегрировали с CRM и системой уведомлений курьеров",
+    results: [{ metric: "−90%", label: "ручной обработки" }, { metric: "+210%", label: "заказов в месяц" }, { metric: "4 мин", label: "среднее время оформления" }],
+    duration: "6 недель",
   },
 ];
 
@@ -482,9 +482,9 @@ function Portfolio() {
 
 // ─── About ───────────────────────────────────────────────────────────────────
 const team = [
-  { name: "Александр Морозов", role: "Управляющий партнёр", exp: "18 лет в стратегическом консалтинге. Бывший McKinsey." },
-  { name: "Елена Соколова", role: "Директор по операциям", exp: "Lean Six Sigma Black Belt. Оптимизировала 60+ производств." },
-  { name: "Дмитрий Волков", role: "Партнёр, финансы", exp: "CFA. 15 лет в инвестиционном банкинге и финансовом моделировании." },
+  { name: "Алексей Громов", role: "Руководитель агентства", exp: "7 лет в digital. Запустил 150+ проектов от лендингов до высоконагруженных платформ." },
+  { name: "Мария Кузнецова", role: "Head of Design & Mobile", exp: "UX/UI эксперт. Разработала приложения с суммарной аудиторией 500 000+ пользователей." },
+  { name: "Сергей Павлов", role: "Директор по маркетингу", exp: "Специалист по performance-маркетингу. Управлял бюджетами свыше 50 млн ₽ в год." },
 ];
 
 function About() {
@@ -496,29 +496,30 @@ function About() {
             <div className="reveal">
               <p className="text-xs tracking-widest uppercase mb-4 font-sans" style={{ color: "var(--gold)" }}>О нас</p>
               <h2 className="font-display text-5xl md:text-6xl font-light mb-6" style={{ color: "#e8e0d0" }}>
-                Мы знаем,{" "}
-                <em className="italic" style={{ color: "var(--gold)" }}>как растут</em>{" "}
-                бизнесы
+                Мы делаем{" "}
+                <em className="italic" style={{ color: "var(--gold)" }}>digital</em>,{" "}
+                который работает
               </h2>
               <div className="gold-line mb-8" />
             </div>
             <div className="reveal">
               <p className="font-sans text-base leading-relaxed mb-6" style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.9" }}>
-                БизнесВверх — консалтинговая компания с 12-летней историей. Мы работаем с компаниями
-                от малого бизнеса до крупных корпораций, помогая им выходить на новые рынки,
-                оптимизировать операции и масштабировать выручку.
+                БизнесВверх — full-service digital-агентство. Разрабатываем сайты, мобильные
+                приложения, запускаем рекламу и автоматизируем бизнес-процессы. Работаем
+                с малым бизнесом, сетями и маркетплейсами.
               </p>
               <p className="font-sans text-base leading-relaxed" style={{ color: "rgba(232, 224, 208, 0.6)", lineHeight: "1.9" }}>
-                Наш подход основан на данных, а не на интуиции. Каждое решение подкреплено
-                глубоким анализом рынка, финансовым моделированием и многолетним опытом.
+                Для нас важен результат, а не процесс. Каждый проект сопровождается
+                аналитикой, отчётностью и поддержкой после запуска — чтобы ваш бизнес
+                рос, а не просто «имел сайт».
               </p>
             </div>
             <div className="reveal mt-12 grid grid-cols-2 gap-4">
               {[
-                { icon: "Target", text: "Ориентация на результат" },
-                { icon: "BarChart2", text: "Решения на основе данных" },
-                { icon: "Handshake", text: "Долгосрочное партнёрство" },
-                { icon: "Lightbulb", text: "Нестандартный взгляд" },
+                { icon: "Target", text: "Результат, а не процесс" },
+                { icon: "BarChart2", text: "Аналитика и отчётность" },
+                { icon: "Handshake", text: "Поддержка после запуска" },
+                { icon: "Lightbulb", text: "Современные технологии" },
               ].map((v) => (
                 <div
                   key={v.text}
@@ -604,11 +605,11 @@ function Contacts() {
               style={{ background: "rgba(201, 168, 76, 0.05)", border: "1px solid rgba(201, 168, 76, 0.15)" }}
             >
               <p className="font-display text-2xl font-light mb-3" style={{ color: "#e8e0d0" }}>
-                Бесплатная первичная консультация
+                Бесплатный аудит вашего digital
               </p>
               <p className="font-sans text-sm" style={{ color: "rgba(232, 224, 208, 0.5)", lineHeight: "1.8" }}>
-                60 минут с нашим партнёром — разберём вашу ситуацию и предложим точки роста
-                без каких-либо обязательств.
+                Разберём ваш сайт, рекламу и присутствие в сети — покажем точки роста
+                и предложим решение под ваш бюджет без обязательств.
               </p>
             </div>
           </div>
